@@ -69,7 +69,7 @@ const SavedBlogs = () => {
             <BlogDescription>{elipsisText(blog.description, 90)}</BlogDescription>
           </BlogInfo>
           <ActionButton>
-            <DotsButton>...</DotsButton>
+            <DotsButton>Actions</DotsButton>
           </ActionButton>
         </BlogItem>
       ))}
