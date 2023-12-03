@@ -1,0 +1,16 @@
+{
+  "blogs": [
+    {
+      "id": 1,
+      "title": "React",
+      "description": "this is react app",
+      "image": "app-image"
+    },
+    {
+      "id": 2,
+      "title": "Node",
+      "description": "this is node app",
+      "image": "app-image"
+    }
+  ]
+}

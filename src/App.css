@@ -1,0 +1,147 @@
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+
+body {
+  background-color: #c9c9c9;
+
+}
+
+a {
+  text-decoration: none;
+}
+
+button {
+  outline: none;
+  border: none;
+  cursor: pointer;
+  border-radius: 20px;
+}
+
+.t-center {
+  text-align: center !important;
+}
+
+.w-25 {
+  width: 20% !important;
+}
+
+.mt-10 {
+  margin-top: 10px;
+}
+
+.pt-15 {
+  padding-top: 15px;
+}
+
+.mb-10 {
+  margin-bottom: 10px;
+}
+
+.cursor-p {
+  cursor: pointer;
+}
+
+/* slider */
+/* ImageSlider.css */
+.slick-prev,
+.slick-next {
+  z-index: 999 !important;
+  width: 30px !important;
+  height: 30px !important;
+  background: #ffae33 !important;
+}
+
+.slick-prev {
+  left: 40px !important;
+}
+
+.slick-next {
+  right: 20px !important;
+}
+
+.slick-dots li button:before {
+  top: -3px !important;
+  left: -1px !important;
+  font-size: 23px !important;
+  line-height: 30px !important;
+  opacity: .5 !important;
+  color: #ffae33 !important;
+}
+
+.slick-active button {
+  background-color: red !important;
+}
+
+.slick-dots {
+  bottom: 30px !important;
+}
+
+.slider-container {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  height: 400px;
+}
+
+.sliders {
+  width: 100%;
+  display: flex;
+  transition: transform 0.3s ease-in-out;
+}
+
+.slidee {
+  padding: 10px;
+  box-sizing: border-box;
+  text-align: center;
+  opacity: 0;
+  transform: scale(0.8);
+  transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+  flex: 0 0 100%;
+}
+
+.slidee .active {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.slidee img {
+  width: 100%;
+  height: auto;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+}
+
+.caption {
+  margin-top: 10px;
+  font-size: 18px;
+}
+
+.prev-button,
+.next-button {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: #333;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.prev-button {
+  left: 10px;
+}
+
+.next-button {
+  right: 10px;
+}
+
+.prev-button:hover,
+.next-button:hover {
+  background-color: #555;
+}
