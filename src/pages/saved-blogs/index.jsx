@@ -1,9 +1,15 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import styled from 'styled-components';
 import { useGetAllBlogs, useGetSavedBlog } from '../../query-hooks/blogs/hooks';
 import { elipsisText } from '../../utils/axios/axios-interceptor';
 import Loader from '../../components/loader';
 import { currentUserApp } from '../../utils/common';
+import { IconButton } from '@mui/material';
+import MoreVertIcon from '@mui/icons-material/MoreVert';
+import { AuthContext } from '../../context';
+import DialogBox from '../../components/diaog-box/dialog-box';
+
+
 const BlogListContainer = styled.div`
 max-width: 720px;
 width: 100%;
@@ -52,6 +58,7 @@ const DotsButton = styled.button`
 const SavedBlogs = () => {
   const { data: blogList, isLoading, isError, error, isSuccess } = useGetAllBlogs();
   const currentUser = currentUserApp ? currentUserApp() : {};
+  const { cardActionModal, handleCardAction, handleCardCloseAction } = useContext(AuthContext);
 
   const { data: getSaveBlog, isLoading: savedBlogLoading } = useGetSavedBlog(currentUser?.userId);
   console.log(getSaveBlog, "getSaveBlog")
@@ -69,7 +76,18 @@ const SavedBlogs = () => {
             <BlogDescription>{elipsisText(blog.description, 90)}</BlogDescription>
           </BlogInfo>
           <ActionButton>
-            <DotsButton>Actions</DotsButton>
+            <DotsButton>
+              <IconButton aria-label="settings">
+                <MoreVertIcon className='cursor-p' onClick={() => handleCardAction(blog?._id)} />
+              </IconButton>
+            </DotsButton>
+            {cardActionModal === blog?._id ?
+              <DialogBox
+                blogUser={currentUser?.username}
+                blogId={cardActionModal}
+                onClose={handleCardCloseAction}
+              />
+              : null}
           </ActionButton>
         </BlogItem>
       ))}
