@@ -160,16 +160,20 @@ const BlogPage = () => {
                             onChange={(e) => setSearchQuery(e.target.value)}
                         />
                     </GlobalFilterStyle>
-                    <NavLink to="/blog">
-                        <Button variant='contained' style={{ padding: '10px', marginBottom: '15px', width: '100%' }} >+ Create Blog</Button>
-                    </NavLink>
+
                     <OutsideClickHandler onOutsideClick={() => setIsFilterVisible(false)}>
                         <FilterButton>
                             <Button variant='contained' onClick={() => setIsFilterVisible(!isFilterVisible)} style={{ padding: '10px', marginBottom: '15px' }} >Filter Blog</Button>
                         </FilterButton>
                     </OutsideClickHandler>
+                    <NavLink to="/blog" className='t-right'>
+                        <Button variant='contained' style={{ padding: '10px', marginBottom: '15px', width: '100%' }} >+ Create Blog</Button>
+                    </NavLink>
                 </BlogHeaderSection>
-                <h2 className='mb-10'>{debounceValue.length ? <>Result for : {debounceValue}</> : ''}</h2>
+                <div className='border-line'>
+                    <h2 className='mb-10'>{debounceValue.length ? <>Result for : {debounceValue}</> : ''}</h2>
+                </div>
+
                 <Grid container spacing={2}>
                     <Grid item lg={3} md={3} >
                         <div style={{ position: 'relative' }}>
@@ -195,7 +199,7 @@ const BlogPage = () => {
                             </LeftFilterContainer>
                         </div>
                     </Grid>
-                    <Grid item lg={8} md={8}>
+                    <Grid item lg={9} md={9}>
                         {isSuccess && Array.isArray(blogList) && blogList.length > 0 ? (
                             blogList?.filter((item) => filteredByCategory(item, filterBlogs)
                             )?.filter((ele) => filterBlogList(ele, debounceValue))?.slice(0, itemsPerPage)?.map((blog) => (
@@ -214,12 +218,9 @@ const BlogPage = () => {
                         )}
                         {blogList.length > itemsPerPage && (
                             <div className='t-center cursor-p my-3'>
-                                <Button variant='outlined' onClick={() => setItemsPerPage(prev => prev + 10)}>View More</Button>
+                                <Button variant='outlined' onClick={() => setItemsPerPage(prev => prev + 10)}>Load More</Button>
                             </div>
                         )}
-                    </Grid>
-                    <Grid item lg={1} md={1}>
-
                     </Grid>
                 </Grid>
             </Container>
