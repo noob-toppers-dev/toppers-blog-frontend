@@ -98,12 +98,11 @@ const featuredItems = [
 const HeroPage = () => {
     const [visibleCards, setVisibleCards] = useState(featuredItems.length);
 
-
     const updateVisibleCards = () => {
         const screenWidth = window.innerWidth;
         if (screenWidth <= 500) {
             setVisibleCards(1);
-        } else if (screenWidth == 800 || screenWidth <= 900) {
+        } else if (screenWidth >= 800 || screenWidth <= 900) {
             setVisibleCards(3);
         } else if (screenWidth <= 1224) {
             setVisibleCards(4);
