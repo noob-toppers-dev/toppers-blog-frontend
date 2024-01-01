@@ -4,13 +4,15 @@ import { HomeInnerStyle, HomeWrapperStyle } from '../../styled-components';
 import Banner from '../../components/banner';
 
 import BlogPage from '../../pages/blog';
+import HeroPage from '../../pages/blog/hero-page';
 const Home = () => {
 
 
 
     return (
         <HomeWrapperStyle>
-            <Banner />
+            {/* <Banner /> */}
+            <HeroPage />
             <HomeInnerStyle>
                 <BlogPage />
             </HomeInnerStyle>

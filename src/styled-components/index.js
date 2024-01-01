@@ -158,6 +158,7 @@ export const HomeWrapperStyle = styled.div`
         width: 100%;
 `
 export const HomeInnerStyle = styled.div`
+margin-top: 80px;
         padding: 10px 20px;
         @media (max-width: 576px) {
           padding: 5px;
@@ -342,4 +343,22 @@ export const FooterLogin = styled.div`
       margin-left: 10px;
       text-decoration: underline;
     }
+`
+export const HeroFeaturedTitle = styled.h2`
+ font-size: 22px;
+ color: #2a2a2a;
+ font-weight: 600;
+ margin-bottom: 15px;
+`
+export const HeroFeaturedSubTitle = styled.h3`
+ font-size: 18px;
+ color: #2a2a2a;
+ font-weight: 400;
+`
+export const HeroFeaturedCard = styled.div`
+flex: ${({ itemLen }) => `0 0 calc(100%/${itemLen})`};
+text-align: center;
+min-width: 200px;
+width: 100%;
+height: 80px;
 `

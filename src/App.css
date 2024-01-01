@@ -25,6 +25,10 @@ button {
   text-align: center !important;
 }
 
+.t-right {
+  text-align: right !important;
+}
+
 .w-25 {
   width: 20% !important;
 }
@@ -44,6 +48,37 @@ button {
 .cursor-p {
   cursor: pointer;
 }
+
+.border-line {
+  border-bottom: 2px solid #cccccc;
+  margin: 20px 0px;
+}
+
+.dot {
+  font-size: 52px;
+  color: crimson;
+  transition: 0.5s;
+  animation: dots 2s linear infinite;
+}
+
+@keyframes dots {
+  0% {
+    color: #ffae33;
+  }
+
+  50% {
+    color: #ffffff;
+  }
+
+  100% {
+    color: #00ac48;
+  }
+}
+
+
+
+
+
 
 /* slider */
 /* ImageSlider.css */
