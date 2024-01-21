@@ -150,12 +150,12 @@ const PaymentCard = ({ data }) => {
                                 <ColorDropDown>
                                     <h4>Color</h4>
                                     <SelectDropDown>
-                                        <option value="color">Color</option>
+                                        <option value="color">Choose Color</option>
                                         <option value="red">Red</option>
                                         <option value="blue">Blue</option>
                                     </SelectDropDown>
                                     <SelectDropDown>
-                                        <option value="color">Color</option>
+                                        <option value="color">Choose Color</option>
                                         <option value="red">Red</option>
                                         <option value="blue">Blue</option>
                                     </SelectDropDown>
