@@ -1,7 +1,7 @@
 
 import React from 'react';
 import styled, { css } from 'styled-components';
-import { Button } from '@mui/material';
+import { Button, Grid } from '@mui/material';
 import { FlexCenter, FlexContainer } from '../../styled-components';
 import EditIcon from '@mui/icons-material/Edit'
 import { removeNumUser } from '../../utils/axios/axios-interceptor';
@@ -11,8 +11,9 @@ const Container = styled.section`
 
 const Main = styled.article`
   width: 100%;
-  height: 400px;
-  position: relative;
+  max-height: 300px;
+  height: 100%;
+  ${FlexCenter}
   box-shadow: 0px 5px 8px darkgrey;
   transition: all 0.5s ease-in-out;
   
@@ -41,13 +42,20 @@ const commonAbsolute = css`
 
 
 
+const ProfileConatiner = styled.div`
+
+`
+
+
 const Pic = styled.img`
- ${commonAbsolute}
     width: 150px;
     height: 150px;
-    top: 30%;
-    left: 10%;
     background: #f0f0f0;
+    box-shadow: 0px 3px 5px darkgrey;
+    border: solid 2px white;
+    transition: all 1s ease-in-out;
+    border-radius: 50%;
+    background-size: cover;
 
 
 `;
@@ -81,8 +89,6 @@ const EditIconButton = styled.div`
 
 const UserDetail = styled.div`
     color: #000;
-    padding: 80px 20px 20px 100px;
-    ${FlexContainer}
     `;
 
 const UserDetailLeft = styled.div`
@@ -121,21 +127,31 @@ const UserProfileCard = ({ currentUser }) => {
   return (
     <Container>
       <Main>
-        <UserThumbnail></UserThumbnail>
-        <Pic id="profile_pic" src={currentUser?.profile} />
-        <EditIconButton><EditIcon /></EditIconButton>
-        <UserDetail>
-          <UserDetailLeft>
-            <Name>{removeNumUser(currentUser?.username)}</Name>
-            <Designation>FullStack Developer</Designation>
-            <Description>I am Fullstack Developer abcd word world about chandrana oon earth sun space</Description>
-          </UserDetailLeft>
-          <UserDetailRight>
-            <Button variant='outlined' >{currentUser?.blogs?.length} Blogs</Button>
-            <Button variant='outlined' >{currentUser?.followers?.length}  Followers</Button>
-            <Button variant='outlined' >{currentUser?.following?.length}  Following</Button>
-          </UserDetailRight>
-        </UserDetail>
+        <Grid container spacing={2}>
+          <Grid item md={4}>
+            {/* <UserThumbnail></UserThumbnail> */}
+            {/* <EditIconButton><EditIcon /></EditIconButton> */}
+            <ProfileConatiner>
+
+              <Pic id="profile_pic" src={currentUser?.profile} />
+            </ProfileConatiner>
+          </Grid>
+          <Grid item md={8}>
+
+            <UserDetail>
+              <UserDetailLeft>
+                <Name>{removeNumUser(currentUser?.username)}</Name>
+                <Designation>FullStack Developer</Designation>
+                <Description>I am Fullstack Developer abcd word world about chandrana oon earth sun space</Description>
+              </UserDetailLeft>
+              <UserDetailRight>
+                <Button variant='outlined' >{currentUser?.blogs?.length} Blogs</Button>
+                <Button variant='outlined' >{currentUser?.followers?.length}  Followers</Button>
+                <Button variant='outlined' >{currentUser?.following?.length}  Following</Button>
+              </UserDetailRight>
+            </UserDetail>
+          </Grid>
+        </Grid>
       </Main>
     </Container>
   );

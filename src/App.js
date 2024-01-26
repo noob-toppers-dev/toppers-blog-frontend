@@ -8,6 +8,7 @@ import AuthProvider, { AuthContext } from './context';
 import Routing from './routes';
 import { useContext } from 'react';
 import styled from 'styled-components';
+import AdminPanel from './admin-panel';
 
 const MainContainerLayout = styled.div`
    padding-top: 45px;
@@ -23,6 +24,7 @@ function App() {
         <LayoutContainer theme={themeMode.toString()} >
           <Header theme={themeMode} />
           <MainContainerLayout>
+            {/* <AdminPanel /> */}
             <Routing />
           </MainContainerLayout>
         </LayoutContainer>

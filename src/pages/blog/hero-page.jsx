@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
 import FeaturedCard from '../../components/featured-card';
-
-
+import { HeroFeaturedTitle } from '../../styled-components';
+import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
+import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 const HeroPageStyle = styled.div`
   padding: 20px;
   background: #111111;
@@ -45,28 +46,37 @@ const HeroCaption = styled.h1`
 
 `;
 
-const HeroFeaturedStyle = styled.div`
+const HeroFeaturedBoxStyle = styled.div`
     background: #fff;
     border-radius: 70px;
-    padding: 10px 20px;
+    padding:  20px;
     position: absolute;
     bottom: -20%;
     left: 7%;
     right: 7%;
-    height: 160px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
     overflow: hidden;
-  @media (max-width: 500px) {
-    flex-wrap: nowrap;
-    padding: ${({ itemLen }) => itemLen < 2 && `5px`};
-    height: ${({ itemLen }) => itemLen < 2 && `120px`};
-    bottom: ${({ itemLen }) => itemLen < 2 && `-15%`};
-    justify-content: space-between;
-  }
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
     `;
+
+const HeroFeaturedStyle = styled.div`
+     display: flex;
+  transition: transform 0.3s ease-in-out;
+`;
+
+const ArrowButton = styled.div`
+        .prev-arrow{
+            position: absolute;
+            top: 50%;
+            transform: translate(20px,-50%);
+            left: 20px;
+        }
+        .next-arrow{
+            position: absolute;
+            top: 50%;
+            transform: translate(-20px,-50%);
+            right: 20px;
+        }
+    `
 
 const featuredItems = [
     {
@@ -96,28 +106,39 @@ const featuredItems = [
     },
 ];
 const HeroPage = () => {
-    const [visibleCards, setVisibleCards] = useState(featuredItems.length);
 
-    const updateVisibleCards = () => {
-        const screenWidth = window.innerWidth;
-        if (screenWidth <= 500) {
-            setVisibleCards(1);
-        } else if (screenWidth >= 800 || screenWidth <= 900) {
-            setVisibleCards(3);
-        } else if (screenWidth <= 1224) {
-            setVisibleCards(4);
-        } else {
-            setVisibleCards(5);
-        }
+
+    const [currentIndex, setCurrentIndex] = useState(0);
+
+    const showCards = () => {
+        return featuredItems.slice(currentIndex, currentIndex + 3).map((item) => (
+            <div key={item.id} className="slider-card">
+                <h2>{item.title}</h2>
+                <p>{item.subtitle}</p>
+            </div>
+        ));
     };
 
-    useEffect(() => {
-        updateVisibleCards();
-        window.addEventListener('resize', updateVisibleCards);
-        return () => {
-            window.removeEventListener('resize', updateVisibleCards);
-        };
-    }, [visibleCards, updateVisibleCards]);
+    // const nextSlide = () => {
+    //     if (currentIndex < featuredItems.length) {
+    //         setCurrentIndex(currentIndex + 1);
+    //     }
+    // };
+
+    // const prevSlide = () => {
+    //     if (currentIndex > 0) {
+    //         setCurrentIndex(currentIndex - 1);
+    //     }
+    // };
+    const nextSlide = () => {
+        setCurrentIndex((prevIndex) => (prevIndex + 1) % featuredItems.length);
+    };
+
+    const prevSlide = () => {
+        setCurrentIndex((prevIndex) => (prevIndex - 1 + featuredItems.length) % featuredItems.length);
+    };
+
+
 
     return (
         <HeroPageStyle>
@@ -125,13 +146,42 @@ const HeroPage = () => {
                 Let's Create your new blog on Zee<span className='dot'>.</span>blog !!
                 <div class="moving-line"></div>
             </HeroCaption>
-            <HeroFeaturedStyle itemLen={visibleCards}>
-                {featuredItems.slice(0, visibleCards).map(item => (
-                    <FeaturedCard item={item} itemLen={visibleCards} />
-                ))}
-            </HeroFeaturedStyle>
+            <HeroFeaturedBoxStyle itemLen={currentIndex}>
+                <HeroFeaturedStyle itemLen={currentIndex} >
+                    {featuredItems?.map(item => (
+                        <FeaturedCard item={item} itemLen={currentIndex} />
+                    ))}
+                    <ArrowButton>
+                        <ArrowBackIosIcon onClick={prevSlide} className='prev-arrow' />
+                        <ArrowForwardIosIcon onClick={nextSlide} className='next-arrow' />
+                    </ArrowButton>
+                </HeroFeaturedStyle>
+            </HeroFeaturedBoxStyle>
         </HeroPageStyle>
     )
-}
 
-export default HeroPage
+
+};
+export default HeroPage;
+
+
+// const updateVisibleCards = () => {
+//     const screenWidth = window.innerWidth;
+//     if (screenWidth <= 500) {
+//         setVisibleCards(1);
+//     } else if (screenWidth == 800 || screenWidth <= 900) {
+//         setVisibleCards(3);
+//     } else if (screenWidth <= 1224) {
+//         setVisibleCards(4);
+//     } else {
+//         setVisibleCards(5);
+//     }
+// };
+
+// useEffect(() => {
+//     updateVisibleCards();
+//     window.addEventListener('resize', updateVisibleCards);
+//     return () => {
+//         window.removeEventListener('resize', updateVisibleCards);
+//     };
+// }, [currentIndex, updateVisibleCards]);

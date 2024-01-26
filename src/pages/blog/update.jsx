@@ -12,6 +12,7 @@ import { getUserName } from '../../utils/axios/axios-interceptor';
 import { useNavigate, useParams } from 'react-router-dom';
 import { updateBlogMutation } from '../../query-hooks/blogs/api';
 import Loader from '../../components/loader';
+import useInputChange from '../../hooks/use-input-change';
 
 
 const initialValue = {
@@ -26,13 +27,14 @@ const UpdateBlog = () => {
 
 
 
-    const [blogValue, setBlogValue] = useState(initialValue);
+    // const [blogValue, setBlogValue] = useState(initialValue);
     const [file, setFile] = useState("");
     const [previewUrl, setPreviewUrl] = useState(false);
     const { auth } = useContext(AuthContext);
     const { id } = useParams();
     const currentUser = getUserName();
     const navigate = useNavigate();
+    const { inputValues: blogValue, handleChange, setInputValues: setBlogValue } = useInputChange(initialValue);
     const imagePreviewUrl = blogValue?.picture ? blogValue?.picture : 'https://logodix.com/logo/2003981.png'
 
     const { mutate: uploadPicMutation, isLoading: imageLoading } = useMutation(uploadPicture);
@@ -42,15 +44,15 @@ const UpdateBlog = () => {
     const { mutateAsync: updateBlog, isLoading: updateLoading } = useMutation(updateBlogMutation)
 
 
-    const handleChange = (e) => {
-        const { name, value } = e.target;
-        setBlogValue((prevVal) => {
-            return {
-                ...prevVal,
-                [name]: value
-            }
-        })
-    }
+    // const handleChange = (e) => {
+    //     const { name, value } = e.target;
+    //     setBlogValue((prevVal) => {
+    //         return {
+    //             ...prevVal,
+    //             [name]: value
+    //         }
+    //     })
+    // }
 
     const handleUpdate = async (e) => {
         e.preventDefault();
@@ -114,8 +116,6 @@ const UpdateBlog = () => {
 
     return (
         <>
-
-
             <BlogForm
                 type="edit"
                 blogValue={blogValue}

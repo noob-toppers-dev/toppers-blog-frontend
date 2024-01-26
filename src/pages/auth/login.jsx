@@ -105,7 +105,6 @@ const Login = ({ setIsAuth }) => {
                         name='password'
                         value={inputValue.password}
                         onChange={handleChange}
-
                     />
                     <EyeIcon onClick={() => setHideShow(!hideShow)}>
                         {!hideShow ?

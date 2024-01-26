@@ -28,7 +28,7 @@ const Register = () => {
     const [loginError, setLoginError] = useState(null)
 
     const imagePreviewUrl = inputValue?.picture ? inputValue?.picture : 'https://logodix.com/logo/2003981.png'
-
+    // console.log(inputValue, "inputValue")
     const navigate = useNavigate();
 
     const { mutate: uploadPicMutation, isLoading: imageLoading } = useMutation(uploadPicture, {
