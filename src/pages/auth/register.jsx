@@ -1,18 +1,13 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import InputField from '../../components/input-field'
-import { FormButton, FormContainerStyle, FormControls, FormHeader, FormStyle, PictureLabelStyle, PriviewImage } from '../../styled-components'
+import { FormButton, FormContainerStyle, FormControls, FormHeader, FormStyle, } from '../../styled-components'
 import { useNavigate } from 'react-router-dom'
 import { toast } from 'react-hot-toast'
 import { isValidEmail, isValidPassword, isValidUserName } from '../../utils/validation'
 import { useMutation } from 'react-query'
-
-import Loader from '../../components/loader';
-import FileUploadIcon from '@mui/icons-material/FileUpload';
-import { TextField } from '@mui/material'
 import ErrorBoundary from '../../components/error-boundary'
 import ButtonLoader from '../../components/loader/button-loader'
 import { registerUser } from '../../query-hooks/auth/api'
-import { uploadPicture } from '../../helpers'
 
 const Register = () => {
 
@@ -20,24 +15,15 @@ const Register = () => {
         userName: '',
         email: '',
         password: '',
-        profile: ''
     }
     const [inputValue, setInputValue] = useState(initialValue);
     const [previewUrl, setPreviewUrl] = useState(false);
-    const [file, setFile] = useState("");
     const [loginError, setLoginError] = useState(null)
 
-    const imagePreviewUrl = inputValue?.picture ? inputValue?.picture : 'https://logodix.com/logo/2003981.png'
-
+    // console.log(inputValue, "inputValue")
     const navigate = useNavigate();
 
-    const { mutate: uploadPicMutation, isLoading: imageLoading } = useMutation(uploadPicture, {
-        onSuccess: (data) => {
-        },
-        onError: (error) => {
-            console.log(error, "upload  error")
-        }
-    });
+
 
     const { mutate: registerAPIMutation, isLoading, isError } = useMutation(registerUser, {
         onSuccess: (data) => {
@@ -66,28 +52,7 @@ const Register = () => {
 
 
 
-    useEffect(() => {
-        (async () => {
-            if (file) {
-                const data = new FormData();
-                data.append("name", file.name);
-                data.append("file", file);
-                await uploadPicMutation(data, {
-                    onSuccess: (datas) => {
-                        setInputValue((prevValue) => ({
-                            ...prevValue,
-                            profile: datas,
-                        }));
-                        setPreviewUrl(true)
-                    },
-                    onError: (error) => {
-                        toast.error(error)
-                        console.error('Profile upload failed', error);
-                    }
-                })
-            }
-        })()
-    }, [file]);
+
 
 
 
@@ -95,7 +60,7 @@ const Register = () => {
     const handleSubmit = async (e) => {
         e.preventDefault()
 
-        const { userName, password, email, profile } = inputValue;
+        const { userName, password, email } = inputValue;
 
         if (!email || !userName || !password) {
             toast.error('Please enter username,email and password')
@@ -119,10 +84,9 @@ const Register = () => {
         if (email && userName && password) {
 
             const userData = {
-                username: inputValue.userName,
+                username: userName,
                 email,
                 password,
-                profile
             }
 
             registerAPIMutation(userData);
@@ -133,18 +97,7 @@ const Register = () => {
         <FormContainerStyle>
             <FormStyle onSubmit={handleSubmit}>
                 <FormHeader>Register Form</FormHeader>
-                <PictureLabelStyle htmlFor='picture'  >
-                    {imageLoading ? <Loader /> : previewUrl && <PriviewImage src={imagePreviewUrl} alt="Preview" />}
-                    <FileUploadIcon /> <span>Profile Upload</span>
-                </PictureLabelStyle>
-                <TextField
-                    id='picture'
-                    type={'file'}
-                    name='file'
-                    style={{ display: 'none' }}
-                    onChange={(e) => setFile(e.target.files[0])}
 
-                />
                 <FormControls>
                     <InputField
                         type={'text'}

@@ -29,6 +29,7 @@
     "slick-carousel": "^1.8.1",
     "socket.io-client": "^4.7.1",
     "styled-components": "^6.0.5",
+    "swiper": "^11.0.5",
     "web-vitals": "^2.1.4"
   },
   "scripts": {

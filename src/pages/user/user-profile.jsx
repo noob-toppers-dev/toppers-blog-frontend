@@ -9,7 +9,6 @@ import UserProfileCard from '../../components/client-profile/user-profile-card';
 import { currentUserApp } from '../../utils/axios/axios-interceptor';
 
 const UserProfile = () => {
-    const [blogs, setBlogs] = useState([])
     const currentUser = currentUserApp()
     const { data: userblogList, isLoading, isError, error, isSuccess } = useQuery('user-blogs', getAllBlogQuery, {
         // enabled: false,

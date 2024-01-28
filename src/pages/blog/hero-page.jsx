@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
-import FeaturedCard from '../../components/featured-card';
+import ImageSwipper from '../../components/image-swipper';
+
 
 
 const HeroPageStyle = styled.div`
@@ -45,28 +46,23 @@ const HeroCaption = styled.h1`
 
 `;
 
-const HeroFeaturedStyle = styled.div`
+const HeroFeaturedBoxStyle = styled.div`
     background: #fff;
     border-radius: 70px;
-    padding: 10px 20px;
+    padding:  20px;
     position: absolute;
     bottom: -20%;
     left: 7%;
     right: 7%;
-    height: 160px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
     overflow: hidden;
-  @media (max-width: 500px) {
-    flex-wrap: nowrap;
-    padding: ${({ itemLen }) => itemLen < 2 && `5px`};
-    height: ${({ itemLen }) => itemLen < 2 && `120px`};
-    bottom: ${({ itemLen }) => itemLen < 2 && `-15%`};
-    justify-content: space-between;
-  }
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
     `;
+
+const HeroFeaturedStyle = styled.div`
+     display: flex;
+  transition: transform 0.3s ease-in-out;
+`;
+
 
 const featuredItems = [
     {
@@ -96,28 +92,9 @@ const featuredItems = [
     },
 ];
 const HeroPage = () => {
-    const [visibleCards, setVisibleCards] = useState(featuredItems.length);
 
-    const updateVisibleCards = () => {
-        const screenWidth = window.innerWidth;
-        if (screenWidth <= 500) {
-            setVisibleCards(1);
-        } else if (screenWidth >= 800 || screenWidth <= 900) {
-            setVisibleCards(3);
-        } else if (screenWidth <= 1224) {
-            setVisibleCards(4);
-        } else {
-            setVisibleCards(5);
-        }
-    };
 
-    useEffect(() => {
-        updateVisibleCards();
-        window.addEventListener('resize', updateVisibleCards);
-        return () => {
-            window.removeEventListener('resize', updateVisibleCards);
-        };
-    }, [visibleCards, updateVisibleCards]);
+
 
     return (
         <HeroPageStyle>
@@ -125,13 +102,36 @@ const HeroPage = () => {
                 Let's Create your new blog on Zee<span className='dot'>.</span>blog !!
                 <div class="moving-line"></div>
             </HeroCaption>
-            <HeroFeaturedStyle itemLen={visibleCards}>
-                {featuredItems.slice(0, visibleCards).map(item => (
-                    <FeaturedCard item={item} itemLen={visibleCards} />
-                ))}
-            </HeroFeaturedStyle>
+            <HeroFeaturedBoxStyle >
+                <HeroFeaturedStyle  >
+                    <ImageSwipper slides={featuredItems} />
+                </HeroFeaturedStyle>
+            </HeroFeaturedBoxStyle>
         </HeroPageStyle>
     )
-}
 
-export default HeroPage
+
+};
+export default HeroPage;
+
+
+// const updateVisibleCards = () => {
+//     const screenWidth = window.innerWidth;
+//     if (screenWidth <= 500) {
+//         setVisibleCards(1);
+//     } else if (screenWidth == 800 || screenWidth <= 900) {
+//         setVisibleCards(3);
+//     } else if (screenWidth <= 1224) {
+//         setVisibleCards(4);
+//     } else {
+//         setVisibleCards(5);
+//     }
+// };
+
+// useEffect(() => {
+//     updateVisibleCards();
+//     window.addEventListener('resize', updateVisibleCards);
+//     return () => {
+//         window.removeEventListener('resize', updateVisibleCards);
+//     };
+// }, [currentIndex, updateVisibleCards]);

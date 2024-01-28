@@ -7,6 +7,7 @@ import { toast } from 'react-hot-toast';
 import { useCreateBlog } from '../../query-hooks/blogs/hooks';
 import { getUserName } from '../../utils/axios/axios-interceptor';
 import { useNavigate } from 'react-router-dom';
+import useInputChange from '../../hooks/use-input-change';
 
 
 const initialValue = {
@@ -20,14 +21,15 @@ const initialValue = {
 
 const CreateBlog = () => {
 
-
-
-    const [blogValue, setBlogValue] = useState(initialValue);
+    // const [blogValue, setBlogValue] = useState(initialValue);
     const [file, setFile] = useState("");
     const [previewUrl, setPreviewUrl] = useState(false);
     const { auth } = useContext(AuthContext);
     const currentUser = getUserName();
     const navigate = useNavigate();
+
+    const { inputValues: blogValue, handleChange, setInputValues: setBlogValue } = useInputChange(initialValue);
+
     const imagePreviewUrl = blogValue.picture ? blogValue?.picture : 'https://logodix.com/logo/2003981.png'
 
     const { mutate: uploadPicMutation, isLoading: imageLoading } = useMutation(uploadPicture);
@@ -40,16 +42,16 @@ const CreateBlog = () => {
 
     const { mutate: createBlog, isLoading: blogLoading, error, isSuccess } = useCreateBlog(onSuccess)
 
-
-    const handleChange = (e) => {
-        const { name, value } = e.target;
-        setBlogValue((prevVal) => {
-            return {
-                ...prevVal,
-                [name]: value
-            }
-        })
-    }
+    console.log(blogValue, "blogValue")
+    // const handleChange = (e) => {
+    //     const { name, value } = e.target;
+    //     setBlogValue((prevVal) => {
+    //         return {
+    //             ...prevVal,
+    //             [name]: value
+    //         }
+    //     })
+    // }
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -77,7 +79,7 @@ const CreateBlog = () => {
                 const data = new FormData();
                 data.append("name", file.name);
                 data.append("file", file);
-
+                console.log(data, "datttt")
                 uploadPicMutation(data, {
                     onSuccess: (datas) => {
                         setBlogValue((prevValue) => ({

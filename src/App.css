@@ -180,3 +180,40 @@ button {
 .next-button:hover {
   background-color: #555;
 }
+
+
+.slider-container {
+  display: flex;
+  overflow: hidden;
+  /* Adjust the width as per your requirement */
+  margin: 0 auto;
+  transition: transform 0.3s ease-in-out;
+}
+
+.slider-card {
+  flex: 0 0 calc(33.33% - 10px);
+  box-sizing: border-box;
+  text-align: center;
+  padding: 10px;
+  border: 1px solid #ddd;
+  margin: 5px;
+  max-width: 200px;
+  max-height: 200px;
+  overflow: hidden;
+  transition: transform 0.3s ease-in-out;
+}
+
+.slider-buttons {
+  margin-top: 10px;
+  text-align: center;
+}
+
+button {
+  margin: 0 5px;
+  padding: 5px 10px;
+}
+
+/* Optional: Add hover effect */
+.slider-card:hover {
+  transform: scale(1.1);
+}

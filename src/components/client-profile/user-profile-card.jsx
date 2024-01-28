@@ -1,7 +1,7 @@
 
 import React from 'react';
 import styled, { css } from 'styled-components';
-import { Button } from '@mui/material';
+import { Button, Grid } from '@mui/material';
 import { FlexCenter, FlexContainer } from '../../styled-components';
 import EditIcon from '@mui/icons-material/Edit'
 import { removeNumUser } from '../../utils/axios/axios-interceptor';
@@ -10,16 +10,16 @@ const Container = styled.section`
 `;
 
 const Main = styled.article`
+${FlexCenter}
+flex-wrap: wrap;
   width: 100%;
-  height: 400px;
-  position: relative;
+  min-height: 300px;
+  height: 100%;
+  padding: 10px;
+  background: #21242a;
   box-shadow: 0px 5px 8px darkgrey;
   transition: all 0.5s ease-in-out;
   
-
-  /* @media (max-width: 700px) {
-    margin: auto;
-  } */
 `;
 
 const UserThumbnail = styled.div`
@@ -32,7 +32,7 @@ const UserThumbnail = styled.div`
 const commonAbsolute = css`
     position: absolute;
     box-shadow: 0px 3px 5px darkgrey;
-    border: solid 2px white;
+    border: solid 2px #FFAE33;
     transition: all 1s ease-in-out;
     border-radius: 50%;
     background-size: cover;
@@ -41,25 +41,41 @@ const commonAbsolute = css`
 
 
 
+const ProfileConatiner = styled.div`
+position: relative;
+ ${FlexCenter}
+
+@media(max-width:576px){
+  .profile {
+      margin: 0 auto; // Center the image horizontally
+      display: block; // Remove any default inline styling
+    }
+}
+`
+
+
 const Pic = styled.img`
- ${commonAbsolute}
     width: 150px;
     height: 150px;
-    top: 30%;
-    left: 10%;
     background: #f0f0f0;
+    box-shadow: 0px 2px 10px 4px #f5b24d;
+    border: solid 2px #FFAE33;
+    transition: all 1s ease-in-out;
+    border-radius: 50%;
+    background-size: cover;
 
 
 `;
 
 const EditIconButton = styled.div`
- ${FlexCenter}
-  ${commonAbsolute}
+    ${FlexCenter}
+    ${commonAbsolute}
     width: 40px;
     height: 40px;
-    top: 55%;
-    right: 4%;
+    top: 70%;
+    left: 65%;
     z-index: 99;
+    color: #FFAE33;
     &::before {
     content: '';
     position: absolute;
@@ -67,7 +83,7 @@ const EditIconButton = styled.div`
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: #FFAE33;
+    background-color: #FFFEEE;
     opacity: 0;
     border-radius: 100%;
     transition: opacity 0.5s;
@@ -80,50 +96,110 @@ const EditIconButton = styled.div`
 `
 
 const UserDetail = styled.div`
-    color: #000;
-    padding: 80px 20px 20px 100px;
-    ${FlexContainer}
+    color: #FFFEEE;
+    text-align: left;
+    padding-top: 20px;
+    padding-left: 40px;
+    max-width: 500px;
+    width: 100%;
+    @media(max-width:576px){
+      text-align: center;
+      padding-left: 5px;
+}
     `;
 
 const UserDetailLeft = styled.div`
-max-width: 600px;
+/* max-width: 600px; */
     
 `
 const UserDetailRight = styled.div`
   padding: 0px 10px ;
   button{
     margin-right: 7px;
+    margin-bottom: 7px;
   }
 `
 
 const Name = styled.h1`
-    color: #000;
     font-size: 24px;
+    margin-bottom: 15px;
     text-transform: capitalize;
 `;
 const Designation = styled.h3`
-    color: #383838;
-    font-size: 18px;
-    margin-bottom: 12px;
+    font-size: 20px;
+    margin-bottom: 15px;
 `;
 
 
 const Description = styled.p`
-  color: #676767;
   font-weight: 100;
   font-size: 1rem;
   line-height: 1.5;
+  margin-bottom: 15px;
 `;
 
 const UserProfileCard = ({ currentUser }) => {
 
   console.log(currentUser?.blogs?.length, "currentUser?.blogs?.length")
+  // const { mutate: uploadPicMutation, isLoading: imageLoading } = useMutation(uploadPicture, {
+  //     onSuccess: (data) => {
+  //     },
+  //     onError: (error) => {
+  //         console.log(error, "upload  error")
+  //     }
+  // });
+  //   <PictureLabelStyle htmlFor='picture'  >
+  //   {imageLoading ? <Loader /> : previewUrl && <PriviewImage src={imagePreviewUrl} alt="Preview" />}
+  //   <FileUploadIcon /> <span>Profile Upload</span>
+  // </PictureLabelStyle>
+  // <TextField
+  //   id='picture'
+  //   type={'file'}
+  //   name='file'
+  //   style={{ display: 'none' }}
+  //   onChange={(e) => setFile(e.target.files[0])}
+
+  // />
+
+  // useEffect(() => {
+  //     (async () => {
+  //         if (file) {
+  //             const data = new FormData();
+  //             data.append("name", file.name);
+  //             data.append("file", file);
+  //             await uploadPicMutation(data, {
+  //                 onSuccess: (datas) => {
+  //                     setInputValue((prevValue) => ({
+  //                         ...prevValue,
+  //                         profile: datas,
+  //                     }));
+  //                     setPreviewUrl(true)
+  //                 },
+  //                 onError: (error) => {
+  //                     toast.error(error)
+  //                     console.error('Profile upload failed', error);
+  //                 }
+  //             })
+  //         }
+  //     })()
+  // }, [file]);
+
+  // const [file, setFile] = useState("");
+
+  // const imagePreviewUrl = inputValue?.picture ? inputValue?.picture : 'https://logodix.com/logo/2003981.png'
+
   return (
     <Container>
       <Main>
-        <UserThumbnail></UserThumbnail>
-        <Pic id="profile_pic" src={currentUser?.profile} />
-        <EditIconButton><EditIcon /></EditIconButton>
+        {/* <Grid container spacing={2}>
+          <Grid item md={4} sm={6}> */}
+        <ProfileConatiner>
+          <Pic className='profile' id="profile_pic" src={currentUser?.profile} />
+          <EditIconButton><EditIcon /></EditIconButton>
+        </ProfileConatiner>
+        {/* </Grid>
+          <Grid item md={8} sm={6}> */}
+
         <UserDetail>
           <UserDetailLeft>
             <Name>{removeNumUser(currentUser?.username)}</Name>
@@ -136,6 +212,8 @@ const UserProfileCard = ({ currentUser }) => {
             <Button variant='outlined' >{currentUser?.following?.length}  Following</Button>
           </UserDetailRight>
         </UserDetail>
+        {/* </Grid>
+        </Grid> */}
       </Main>
     </Container>
   );

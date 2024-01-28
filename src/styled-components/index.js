@@ -302,7 +302,7 @@ span{
 export const Dialog = styled.div`
  /* display: ${props => (props.isToggle === 'true' ? 'block' : 'none')}; */
   position: absolute;
-  top: 90%;
+  top: 10%;
   right: 5%;
   transform: translate(-8%, -10%);
   width: 140px;
@@ -356,9 +356,18 @@ export const HeroFeaturedSubTitle = styled.h3`
  font-weight: 400;
 `
 export const HeroFeaturedCard = styled.div`
-flex: ${({ itemLen }) => `0 0 calc(100%/${itemLen})`};
-text-align: center;
+/* flex: ${({ itemLen }) => `0 0 calc(100%/${itemLen})`}; */
+/* text-align: center;
 min-width: 200px;
 width: 100%;
-height: 80px;
+height: 80px; */
+flex: 0 0 calc(33.33% - 10px);
+  box-sizing: border-box;
+  text-align: center;
+  padding: 10px;
+  margin: 5px;
+  /* max-width: 200px;
+  max-height: 200px; */
+  overflow: hidden;
+  transition: transform 0.3s ease-in-out;
 `
