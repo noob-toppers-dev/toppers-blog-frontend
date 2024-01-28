@@ -60,10 +60,11 @@ const SavedBlogs = () => {
   const currentUser = currentUserApp ? currentUserApp() : {};
   const { cardActionModal, handleCardAction, handleCardCloseAction } = useContext(AuthContext);
 
-  const { data: getSaveBlog, isLoading: savedBlogLoading } = useGetSavedBlog(currentUser?.userId);
+  const { data: getSaveBlog, isLoading: savedBlogLoading } = useGetSavedBlog(currentUser?._id);
+  console.log(currentUser, "currentUser")
   console.log(getSaveBlog, "getSaveBlog")
 
-  if (isLoading) {
+  if (savedBlogLoading) {
     return <Loader />
   }
   return (

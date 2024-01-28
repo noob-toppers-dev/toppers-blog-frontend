@@ -35,7 +35,7 @@ const BlogCard = ({ data, blogLoading }) => {
     const { cardActionModal, handleCardAction, handleCardCloseAction } = useContext(AuthContext)
     const [isFollowing, setIsFollowing] = useState(true);
     const { userId, profile, username, followers, following } = currentUserApp();
-
+    console.log(data, "--------data")
 
     const likeBlog = useLikeBlog();
     const disLikeBlog = useDisLikeBlog();
