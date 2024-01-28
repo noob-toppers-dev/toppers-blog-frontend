@@ -1,10 +1,16 @@
 
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import styled, { css } from 'styled-components';
-import { Button, Grid } from '@mui/material';
+import { Button, Grid, TextField } from '@mui/material';
 import { FlexCenter, FlexContainer } from '../../styled-components';
 import EditIcon from '@mui/icons-material/Edit'
 import { removeNumUser } from '../../utils/axios/axios-interceptor';
+import { uploadPicture } from '../../helpers';
+import { useMutation } from 'react-query';
+import toast from 'react-hot-toast';
+import ButtonLoader from '../loader/button-loader';
+import Loader from '../loader';
+import { useGetUserProfile } from '../../query-hooks/auth/hooks';
 const Container = styled.section`
   width: 100%;
 `;
@@ -47,8 +53,8 @@ position: relative;
 
 @media(max-width:576px){
   .profile {
-      margin: 0 auto; // Center the image horizontally
-      display: block; // Remove any default inline styling
+      margin: 0 auto; 
+      display: block;
     }
 }
 `
@@ -67,7 +73,7 @@ const Pic = styled.img`
 
 `;
 
-const EditIconButton = styled.div`
+const EditIconButton = styled.label`
     ${FlexCenter}
     ${commonAbsolute}
     width: 40px;
@@ -140,80 +146,79 @@ const Description = styled.p`
 
 const UserProfileCard = ({ currentUser }) => {
 
-  console.log(currentUser?.blogs?.length, "currentUser?.blogs?.length")
-  // const { mutate: uploadPicMutation, isLoading: imageLoading } = useMutation(uploadPicture, {
-  //     onSuccess: (data) => {
-  //     },
-  //     onError: (error) => {
-  //         console.log(error, "upload  error")
-  //     }
-  // });
-  //   <PictureLabelStyle htmlFor='picture'  >
-  //   {imageLoading ? <Loader /> : previewUrl && <PriviewImage src={imagePreviewUrl} alt="Preview" />}
-  //   <FileUploadIcon /> <span>Profile Upload</span>
-  // </PictureLabelStyle>
-  // <TextField
-  //   id='picture'
-  //   type={'file'}
-  //   name='file'
-  //   style={{ display: 'none' }}
-  //   onChange={(e) => setFile(e.target.files[0])}
+  const [file, setFile] = useState("");
+  const [profileImage, setProfileImage] = useState('');
+  const [previewUrl, setPreviewUrl] = useState(false);
 
-  // />
+  const { data: CurrentProfile, isLoading: profileLoading } = useGetUserProfile(currentUser && currentUser?._id);
 
-  // useEffect(() => {
-  //     (async () => {
-  //         if (file) {
-  //             const data = new FormData();
-  //             data.append("name", file.name);
-  //             data.append("file", file);
-  //             await uploadPicMutation(data, {
-  //                 onSuccess: (datas) => {
-  //                     setInputValue((prevValue) => ({
-  //                         ...prevValue,
-  //                         profile: datas,
-  //                     }));
-  //                     setPreviewUrl(true)
-  //                 },
-  //                 onError: (error) => {
-  //                     toast.error(error)
-  //                     console.error('Profile upload failed', error);
-  //                 }
-  //             })
-  //         }
-  //     })()
-  // }, [file]);
 
-  // const [file, setFile] = useState("");
+  console.log(CurrentProfile, "curprofiek")
+  const imagePreviewUrl = CurrentProfile?.user?.profile ? CurrentProfile?.user?.profile : 'https://images.unsplash.com/photo-1575439462433-8e1969065df7?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxjb2xsZWN0aW9uLXBhZ2V8MjB8OTQ1MjQ5NHx8ZW58MHx8fHx8'
 
-  // const imagePreviewUrl = inputValue?.picture ? inputValue?.picture : 'https://logodix.com/logo/2003981.png'
+  const { mutate: uploadPicMutation, isLoading: imageLoading } = useMutation(uploadPicture, {
+    onSuccess: (data) => {
+      console.log(data, "profile")
+    },
+    onError: (error) => {
+      console.log(error, "upload  error")
+    }
+  });
+
+  console.log(profileImage, "profileImage")
+
+  useEffect(() => {
+    (async () => {
+      if (file) {
+        const data = new FormData();
+        data.append("name", file.name);
+        data.append("file", file);
+        uploadPicMutation(data, {
+          onSuccess: (datas) => {
+            console.log(datas, "datass")
+            setProfileImage(datas)
+          },
+          onError: (error) => {
+            toast.error(error)
+            console.error('Profile upload failed', error);
+          }
+        })
+      }
+    })()
+  }, [file]);
+
+
+  if (profileLoading) {
+    return <Loader />
+  }
 
   return (
     <Container>
       <Main>
-        {/* <Grid container spacing={2}>
-          <Grid item md={4} sm={6}> */}
         <ProfileConatiner>
-          <Pic className='profile' id="profile_pic" src={currentUser?.profile} />
-          <EditIconButton><EditIcon /></EditIconButton>
-        </ProfileConatiner>
-        {/* </Grid>
-          <Grid item md={8} sm={6}> */}
+          {previewUrl ? <ButtonLoader /> : <Pic className='profile' id="profile_pic" src={imagePreviewUrl} />}
+          <EditIconButton htmlFor='picture'><EditIcon /></EditIconButton>
+          <TextField
+            id='picture'
+            type={'file'}
+            name='file'
+            style={{ display: 'none' }}
+            onChange={(e) => setFile(e.target.files[0])}
 
+          />
+        </ProfileConatiner>
         <UserDetail>
           <UserDetailLeft>
-            <Name>{removeNumUser(currentUser?.username)}</Name>
+            <Name>{removeNumUser(CurrentProfile?.user?.username)}</Name>
             <Designation>FullStack Developer</Designation>
             <Description>I am Fullstack Developer abcd word world about chandrana oon earth sun space</Description>
           </UserDetailLeft>
           <UserDetailRight>
-            <Button variant='outlined' >{currentUser?.blogs?.length} Blogs</Button>
-            <Button variant='outlined' >{currentUser?.followers?.length}  Followers</Button>
-            <Button variant='outlined' >{currentUser?.following?.length}  Following</Button>
+            <Button variant='outlined' >{CurrentProfile?.user?.blogs?.length} Blogs</Button>
+            <Button variant='outlined' >{CurrentProfile?.user?.followers?.length}  Followers</Button>
+            <Button variant='outlined' >{CurrentProfile?.user?.following?.length}  Following</Button>
           </UserDetailRight>
         </UserDetail>
-        {/* </Grid>
-        </Grid> */}
       </Main>
     </Container>
   );

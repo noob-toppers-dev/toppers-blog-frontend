@@ -14,7 +14,8 @@ const UserProfile = () => {
         // enabled: false,
         staleTime: 10000
     })
-
+    console.log(userblogList, "userblogList")
+    console.log(currentUser, "currentUser")
 
     if (isError) {
         return <h1>{error?.message}</h1>

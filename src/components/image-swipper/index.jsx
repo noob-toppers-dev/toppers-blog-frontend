@@ -22,7 +22,6 @@ const ImageSwipper = ({ slides }) => {
             slidesPerView: 4,
         },
     };
-    console.log(slides, "slidess")
     return (
         <Swiper
             spaceBetween={50}
