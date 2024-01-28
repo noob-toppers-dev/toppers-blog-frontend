@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
-import FeaturedCard from '../../components/featured-card';
-import { HeroFeaturedTitle } from '../../styled-components';
-import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
-import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
+import ImageSwipper from '../../components/image-swipper';
+
+
+
 const HeroPageStyle = styled.div`
   padding: 20px;
   background: #111111;
@@ -63,20 +63,6 @@ const HeroFeaturedStyle = styled.div`
   transition: transform 0.3s ease-in-out;
 `;
 
-const ArrowButton = styled.div`
-        .prev-arrow{
-            position: absolute;
-            top: 50%;
-            transform: translate(20px,-50%);
-            left: 20px;
-        }
-        .next-arrow{
-            position: absolute;
-            top: 50%;
-            transform: translate(-20px,-50%);
-            right: 20px;
-        }
-    `
 
 const featuredItems = [
     {
@@ -108,36 +94,6 @@ const featuredItems = [
 const HeroPage = () => {
 
 
-    const [currentIndex, setCurrentIndex] = useState(0);
-
-    const showCards = () => {
-        return featuredItems.slice(currentIndex, currentIndex + 3).map((item) => (
-            <div key={item.id} className="slider-card">
-                <h2>{item.title}</h2>
-                <p>{item.subtitle}</p>
-            </div>
-        ));
-    };
-
-    // const nextSlide = () => {
-    //     if (currentIndex < featuredItems.length) {
-    //         setCurrentIndex(currentIndex + 1);
-    //     }
-    // };
-
-    // const prevSlide = () => {
-    //     if (currentIndex > 0) {
-    //         setCurrentIndex(currentIndex - 1);
-    //     }
-    // };
-    const nextSlide = () => {
-        setCurrentIndex((prevIndex) => (prevIndex + 1) % featuredItems.length);
-    };
-
-    const prevSlide = () => {
-        setCurrentIndex((prevIndex) => (prevIndex - 1 + featuredItems.length) % featuredItems.length);
-    };
-
 
 
     return (
@@ -146,15 +102,9 @@ const HeroPage = () => {
                 Let's Create your new blog on Zee<span className='dot'>.</span>blog !!
                 <div class="moving-line"></div>
             </HeroCaption>
-            <HeroFeaturedBoxStyle itemLen={currentIndex}>
-                <HeroFeaturedStyle itemLen={currentIndex} >
-                    {featuredItems?.map(item => (
-                        <FeaturedCard item={item} itemLen={currentIndex} />
-                    ))}
-                    <ArrowButton>
-                        <ArrowBackIosIcon onClick={prevSlide} className='prev-arrow' />
-                        <ArrowForwardIosIcon onClick={nextSlide} className='next-arrow' />
-                    </ArrowButton>
+            <HeroFeaturedBoxStyle >
+                <HeroFeaturedStyle  >
+                    <ImageSwipper slides={featuredItems} />
                 </HeroFeaturedStyle>
             </HeroFeaturedBoxStyle>
         </HeroPageStyle>

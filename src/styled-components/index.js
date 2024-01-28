@@ -302,7 +302,7 @@ span{
 export const Dialog = styled.div`
  /* display: ${props => (props.isToggle === 'true' ? 'block' : 'none')}; */
   position: absolute;
-  top: 90%;
+  top: 10%;
   right: 5%;
   transform: translate(-8%, -10%);
   width: 140px;

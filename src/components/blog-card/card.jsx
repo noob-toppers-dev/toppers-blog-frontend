@@ -125,7 +125,7 @@ const IconContainer = styled.div`
   display: flex;
   align-items: center;
   position: relative;
-`;
+  `;
 
 const Icon = styled.img`
   width: 20px; /* Customize the size */

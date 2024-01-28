@@ -90,56 +90,53 @@ const BlogCard = ({ data, blogLoading }) => {
         return <Loader />
     }
     return (
-        <>
-            <Grid item lg={4} md={4} sm={6} xs={12}>
-                <CardStyle>
-                    <CardHeader
-                        avatar={
-                            <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe">
-                                {findUserName(data?.username)}
-                            </Avatar>
-                        }
-                        title={elipsisText(data?.title, 25)}
-                        subheader={findPostDate(data?.createdAt)}
-                        action={
-                            <>
-                                <IconButton aria-label="settings">
-                                    <MoreVertIcon className='cursor-p' onClick={() => handleCardAction(data?._id)} />
-                                </IconButton>
-                                {cardActionModal === data?._id ?
-                                    <DialogBox
-                                        blogUser={data?.username}
-                                        blogId={cardActionModal}
-                                        onClose={handleCardCloseAction}
-                                    />
-                                    : null}
-                            </>
-                        }
+        <Grid item lg={4} md={4} sm={6} xs={12}>
+            <CardStyle>
+                <CardHeader
+                    avatar={
+                        <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe">
+                            {findUserName(data?.username)}
+                        </Avatar>
+                    }
+                    title={elipsisText(data?.title, 25)}
+                    subheader={findPostDate(data?.createdAt)}
+                    action={
+                        <>
+                            <IconButton aria-label="settings">
+                                <MoreVertIcon className='cursor-p' onClick={() => handleCardAction(data?._id)} />
+                            </IconButton>
+                            {cardActionModal === data?._id ?
+                                <DialogBox
+                                    blogUser={data?.username}
+                                    blogId={cardActionModal}
+                                    onClose={handleCardCloseAction}
+                                />
+                                : null}
+                        </>
+                    }
+                />
+                <Link to={`/blog-detail-page/${data?._id}`}>
+                    <CardMedia
+                        component="img"
+                        height="194"
+                        image={data?.picture || "no image"}
+                        alt="image"
                     />
-                    <Link to={`/blog-detail-page/${data?._id}`}>
-                        <CardMedia
-                            component="img"
-                            height="194"
-                            image={data?.picture || "no image"}
-                            alt="image"
-                        />
-                    </Link>
+                </Link>
 
-                    <CardContent sx={{ p: "8px" }}>
-                        <Typography variant="body2" color="text.secondary">
-                            {elipsisText(data?.description, 100)}
-                        </Typography>
-                    </CardContent>
-                    <CardActions disableSpacing >
-                        <IconButton aria-label="like" onClick={() => isLiked ? handleDisLikeBlog(data?._id) : handleLikeBlog(data?._id)}>
-                            <span>{data?.likes?.length}</span>
-                            <FavoriteIconStyle islike={isLiked.toString()} />
-                        </IconButton>
-                    </CardActions>
-                </CardStyle>
-            </Grid>
-
-        </>
+                <CardContent sx={{ p: "8px" }}>
+                    <Typography variant="body2" color="text.secondary">
+                        {elipsisText(data?.description, 100)}
+                    </Typography>
+                </CardContent>
+                <CardActions disableSpacing >
+                    <IconButton aria-label="like" onClick={() => isLiked ? handleDisLikeBlog(data?._id) : handleLikeBlog(data?._id)}>
+                        <span>{data?.likes?.length}</span>
+                        <FavoriteIconStyle islike={isLiked.toString()} />
+                    </IconButton>
+                </CardActions>
+            </CardStyle>
+        </Grid>
     )
 }
 
